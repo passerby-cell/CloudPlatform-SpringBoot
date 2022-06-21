@@ -10,6 +10,6 @@ public class CommonUser {
 
     private String password;
 
-    private String isactive;
+    private String isactive;//0表示未激活,1表示已激活
 
 }

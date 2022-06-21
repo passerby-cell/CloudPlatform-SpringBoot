@@ -15,4 +15,6 @@ public interface AdminUserMapper {
     List<AdminUser> selectAll();
 
     int updateByPrimaryKey(@Param("record") AdminUser record);
+
+    AdminUser selectByAdminUser(@Param("adminUser") AdminUser adminUser);
 }
