@@ -58,6 +58,6 @@
         可以设置为somepck.domainName，那么会自动把domainName类再放到somepck包里面；
         -->
         <table tableName="commonUser" domainObjectName="CommonUser"></table>
-        <table tableName="admin" domainObjectName="Admin"></table>
+        <table tableName="adminUser" domainObjectName="AdminUser"></table>
     </context>
 </generatorConfiguration>

@@ -16,7 +16,7 @@ public class JwtUtil {
     public static final Long JWT_TTL = 3600000L;// 60 * 60 *1000  一个小时
 
     //Jwt令牌信息
-    public static final String JWT_KEY = "itcast";
+    public static final String JWT_KEY = "lhy";
 
     public static String createJWT(String id, String subject, Long ttlMillis) {
         //指定算法
@@ -73,5 +73,10 @@ public class JwtUtil {
                 .setSigningKey(secretKey)
                 .parseClaimsJws(jwt)
                 .getBody();
+    }
+
+    public static void main(String[] args) throws Exception {
+        //System.out.println(createJWT("1","12",null));
+        System.out.println(parseJWT("eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoiMTIiLCJpc3MiOiJhZG1pbiIsImlhdCI6MTY1NTc3OTY5NCwiZXhwIjoxNjU1NzgzMjk0fQ.AdSbdM_xAL9u9m1V3IiuBnToBpeEyVOkFnH9frlLwdg"));
     }
 }
