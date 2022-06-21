@@ -14,8 +14,8 @@
   <insert id="insert" parameterType="com.cloudplatform.pojo.CommonUser">
     insert into commonUser (id, username, password, 
       isactive)
-    values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{isactive,jdbcType=VARCHAR})
+    values (#{record.id,jdbcType=VARCHAR}, #{record.username,jdbcType=VARCHAR}, #{record.password,jdbcType=VARCHAR},
+      #{record.isactive,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.cloudplatform.pojo.CommonUser">
     update commonUser
@@ -27,42 +27,24 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select id, username, password, isactive
     from commonUser
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{record.id,jdbcType=VARCHAR}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, username, password, isactive
     from commonUser
   </select>
-  <resultMap id="BaseResultMap" type="com.cloudplatform.pojo.CommonUser">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="isactive" jdbcType="VARCHAR" property="isactive" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from commonUser
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.cloudplatform.pojo.CommonUser">
-    insert into commonUser (id, username, password, 
-      isactive)
-    values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{isactive,jdbcType=VARCHAR})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="com.cloudplatform.pojo.CommonUser">
-    update commonUser
-    set username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      isactive = #{isactive,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select id, username, password, isactive
-    from commonUser
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, username, password, isactive
-    from commonUser
-  </select>
+    <select id="selectByCommonUser" resultType="com.cloudplatform.pojo.CommonUser">
+      select id, username, password, isactive from commonUser
+      <where>
+        <if test="user.id!=null">
+          and id=#{user.id}
+        </if>
+        <if test="user.username!=null">
+          and username=#{user.username}
+         </if>
+        <if test="user.password!=null">
+             and password=#{user.password}
+        </if>
+      </where>
+    </select>
 </mapper>

@@ -9,8 +9,8 @@ public class Result<T> {
 
     private boolean flag;//是否成功
     private Integer code;//返回码
-
     private String message;//返回消息
+    private String token; //token令牌
     private T data;//返回数据
 
     public Result(boolean flag, Integer code, String message, Object data) {
@@ -18,6 +18,13 @@ public class Result<T> {
         this.code = code;
         this.message = message;
         this.data = (T) data;
+    }
+    public Result(boolean flag, Integer code, String message, Object data,String token) {
+        this.flag = flag;
+        this.code = code;
+        this.message = message;
+        this.data = (T) data;
+        this.token=token;
     }
 
     public Result(boolean flag, Integer code, String message) {
@@ -38,6 +45,13 @@ public class Result<T> {
 
     public void setFlag(boolean flag) {
         this.flag = flag;
+    }
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public Integer getCode() {
