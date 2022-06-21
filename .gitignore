@@ -1,4 +1,4 @@
 .idea
 /src/test
 .gitignore
-target
+target/*
