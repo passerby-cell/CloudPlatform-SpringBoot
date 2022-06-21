@@ -17,7 +17,7 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
-<dependencies>
+    <dependencies>
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-web</artifactId>
@@ -38,7 +38,49 @@
     <dependency>
         <groupId>mysql</groupId>
         <artifactId>mysql-connector-java</artifactId>
+        <version>8.0.13</version>
+    </dependency>
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/javax.persistence/persistence-api -->
+    <dependency>
+        <groupId>javax.persistence</groupId>
+        <artifactId>persistence-api</artifactId>
+        <version>1.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.25</version>
     </dependency>
 
 </dependencies>
+    <build>
+    <plugins>
+        <plugin>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-maven-plugin</artifactId>
+            <version>1.4.0</version>
+            <executions>
+                <execution>
+                    <id>Generate MyBatis Artifacts</id>
+                    <goals>
+                        <goal>generate</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <!-- 输出详细信息 -->
+                <verbose>true</verbose>
+                <!-- 覆盖生成文件 -->
+                <overwrite>true</overwrite>
+                <!-- 定义配置文件 -->
+                <configurationFile>${basedir}/src/main/resources/generator-configuration.xml</configurationFile>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
 </project>
