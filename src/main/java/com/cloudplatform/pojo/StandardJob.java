@@ -25,4 +25,7 @@ public class StandardJob {
 
     private String status;
 
-   }
+    private String userid;
+
+
+}
