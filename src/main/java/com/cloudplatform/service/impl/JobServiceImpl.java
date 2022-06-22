@@ -1,7 +1,10 @@
 package com.cloudplatform.service.impl;
 
+import com.cloudplatform.pojo.Job;
 import com.cloudplatform.service.job.JobService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,4 +15,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class JobServiceImpl implements JobService {
+    @Override
+    public List<Job> getJobList() {
+        return null;
+    }
 }

@@ -1,6 +1,8 @@
 package com.cloudplatform.service.job;
 
-import com.cloudplatform.pojo.StandardJob;
+import com.cloudplatform.pojo.Job;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
