@@ -48,7 +48,7 @@ public class UserController {
             userService.registUser(user);
             return new Result(true,StatusCode.OK,"注册成功");
         }
-        return new Result(false,StatusCode.ERROR,"用户名重复");
+        return new Result(false,StatusCode.ERROR,"用户名已注册");
     }
 
 }
