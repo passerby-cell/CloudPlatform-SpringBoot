@@ -1,7 +1,7 @@
 package com.cloudplatform.controller.admin;
 
 import com.cloudplatform.pojo.AdminUser;
-import com.cloudplatform.service.AdminService;
+import com.cloudplatform.service.admin.AdminService;
 import com.cloudplatform.utils.JwtUtil;
 import com.cloudplatform.utils.Result;
 import com.cloudplatform.utils.StatusCode;

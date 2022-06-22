@@ -1,7 +1,7 @@
 package com.cloudplatform.controller.user;
 
 import com.cloudplatform.pojo.CommonUser;
-import com.cloudplatform.service.UserService;
+import com.cloudplatform.service.user.UserService;
 import com.cloudplatform.utils.JwtUtil;
 import com.cloudplatform.utils.Result;
 import com.cloudplatform.utils.StatusCode;

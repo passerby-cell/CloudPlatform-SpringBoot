@@ -1,4 +1,4 @@
-package com.cloudplatform.service;
+package com.cloudplatform.service.user;
 
 import com.cloudplatform.pojo.CommonUser;
 

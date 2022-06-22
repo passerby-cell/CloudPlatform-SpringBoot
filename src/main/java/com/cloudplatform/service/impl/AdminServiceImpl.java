@@ -2,7 +2,7 @@ package com.cloudplatform.service.impl;
 
 import com.cloudplatform.dao.AdminUserMapper;
 import com.cloudplatform.pojo.AdminUser;
-import com.cloudplatform.service.AdminService;
+import com.cloudplatform.service.admin.AdminService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

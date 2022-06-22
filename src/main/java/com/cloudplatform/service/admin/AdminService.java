@@ -1,4 +1,4 @@
-package com.cloudplatform.service;
+package com.cloudplatform.service.admin;
 
 import com.cloudplatform.pojo.AdminUser;
 

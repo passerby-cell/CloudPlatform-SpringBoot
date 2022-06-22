@@ -2,7 +2,7 @@ package com.cloudplatform.service.impl;
 
 import com.cloudplatform.dao.CommonUserMapper;
 import com.cloudplatform.pojo.CommonUser;
-import com.cloudplatform.service.UserService;
+import com.cloudplatform.service.user.UserService;
 import com.cloudplatform.utils.IdWorker;
 import org.springframework.stereotype.Service;
 
