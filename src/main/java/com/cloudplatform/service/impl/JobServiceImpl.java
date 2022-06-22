@@ -32,4 +32,20 @@ public class JobServiceImpl implements JobService {
         return new PageResult<Job>(pageInfo.getTotal(),pageNum,pageSize,jobList);
     }
 
+    @Override
+    public void pauseJob(String id) {
+        Job job = new Job();
+        job.setStatus("暂停中");
+        job.setId(id);
+        jobMapper.updateStatusByPrimaryKey(job);
+    }
+
+    @Override
+    public void startJob(String id) {
+        Job job = new Job();
+        job.setStatus("执行中");
+        job.setId(id);
+        jobMapper.updateStatusByPrimaryKey(job);
+    }
+
 }

@@ -1,62 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cloudplatform.dao.JobMapper">
-  <resultMap id="BaseResultMap" type="com.cloudplatform.pojo.Job">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="jobname" jdbcType="VARCHAR" property="jobname" />
-    <result column="starttime" jdbcType="TIMESTAMP" property="starttime" />
-    <result column="stoptime" jdbcType="TIMESTAMP" property="stoptime" />
-    <result column="workcount" jdbcType="INTEGER" property="workcount" />
-    <result column="workdonecount" jdbcType="INTEGER" property="workdonecount" />
-    <result column="workinlinecount" jdbcType="INTEGER" property="workinlinecount" />
-    <result column="cpucount" jdbcType="VARCHAR" property="cpucount" />
-    <result column="memcount" jdbcType="VARCHAR" property="memcount" />
-    <result column="status" jdbcType="VARCHAR" property="status" />
-    <result column="userid" jdbcType="VARCHAR" property="userid" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from job
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.cloudplatform.pojo.Job">
-    insert into job (id, jobname, starttime, 
-      stoptime, workcount, workdonecount, 
-      workinlinecount, cpucount, memcount, 
-      status, userid)
-    values (#{id,jdbcType=VARCHAR}, #{jobname,jdbcType=VARCHAR}, #{starttime,jdbcType=VARCHAR},
-      #{stoptime,jdbcType=VARCHAR}, #{workcount,jdbcType=INTEGER}, #{workdonecount,jdbcType=INTEGER},
-      #{workinlinecount,jdbcType=INTEGER}, #{cpucount,jdbcType=VARCHAR}, #{memcount,jdbcType=VARCHAR}, 
-      #{status,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="com.cloudplatform.pojo.Job">
-    update job
-    set jobname = #{jobname,jdbcType=VARCHAR},
-      starttime = #{starttime,jdbcType=VARCHAR},
-      stoptime = #{stoptime,jdbcType=VARCHAR},
-      workcount = #{workcount,jdbcType=INTEGER},
-      workdonecount = #{workdonecount,jdbcType=INTEGER},
-      workinlinecount = #{workinlinecount,jdbcType=INTEGER},
-      cpucount = #{cpucount,jdbcType=VARCHAR},
-      memcount = #{memcount,jdbcType=VARCHAR},
-      status = #{status,jdbcType=VARCHAR},
-      userid = #{userid,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select id, jobname, starttime, stoptime, workcount, workdonecount, workinlinecount, 
-    cpucount, memcount, status, userid
-    from job
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, jobname, starttime, stoptime, workcount, workdonecount, workinlinecount, 
-    cpucount, memcount, status, userid
-    from job
-  </select>
+    <resultMap id="BaseResultMap" type="com.cloudplatform.pojo.Job">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="jobname" jdbcType="VARCHAR" property="jobname"/>
+        <result column="starttime" jdbcType="TIMESTAMP" property="starttime"/>
+        <result column="stoptime" jdbcType="TIMESTAMP" property="stoptime"/>
+        <result column="workcount" jdbcType="INTEGER" property="workcount"/>
+        <result column="workdonecount" jdbcType="INTEGER" property="workdonecount"/>
+        <result column="workinlinecount" jdbcType="INTEGER" property="workinlinecount"/>
+        <result column="cpucount" jdbcType="VARCHAR" property="cpucount"/>
+        <result column="memcount" jdbcType="VARCHAR" property="memcount"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="userid" jdbcType="VARCHAR" property="userid"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from job
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.cloudplatform.pojo.Job">
+        insert into job (id, jobname, starttime,
+                         stoptime, workcount, workdonecount,
+                         workinlinecount, cpucount, memcount,
+                         status, userid)
+        values (#{id,jdbcType=VARCHAR}, #{jobname,jdbcType=VARCHAR}, #{starttime,jdbcType=VARCHAR},
+                #{stoptime,jdbcType=VARCHAR}, #{workcount,jdbcType=INTEGER}, #{workdonecount,jdbcType=INTEGER},
+                #{workinlinecount,jdbcType=INTEGER}, #{cpucount,jdbcType=VARCHAR}, #{memcount,jdbcType=VARCHAR},
+                #{status,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateStatusByPrimaryKey" parameterType="com.cloudplatform.pojo.Job">
+        update job
+        set status = #{record.status,jdbcType=VARCHAR}
+        where id = #{record.id,jdbcType=VARCHAR}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select id,
+               jobname,
+               starttime,
+               stoptime,
+               workcount,
+               workdonecount,
+               workinlinecount,
+               cpucount,
+               memcount,
+               status,
+               userid
+        from job
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select id,
+               jobname,
+               starttime,
+               stoptime,
+               workcount,
+               workdonecount,
+               workinlinecount,
+               cpucount,
+               memcount,
+               status,
+               userid
+        from job
+    </select>
     <select id="selectByUserId" resultType="com.cloudplatform.pojo.Job">
-      select id, jobname, starttime, stoptime, workcount, workdonecount, workinlinecount,
-             cpucount, memcount, status, userid
-      from job
-where userid = #{userId,jdbcType=VARCHAR}
+        select id,
+               jobname,
+               starttime,
+               stoptime,
+               workcount,
+               workdonecount,
+               workinlinecount,
+               cpucount,
+               memcount,
+               status,
+               userid
+        from job
+        where userid = #{userId,jdbcType=VARCHAR}
     </select>
 </mapper>

@@ -28,15 +28,46 @@ public class JobController {
     private JobService jobService;
 
     @GetMapping("/getjoblist")
-    public Result<Job> getJobList(@RequestParam("token")String token,@RequestParam("userid")String userId,@RequestParam(value = "pagenum",required = false,defaultValue = "1")int pagenum,@RequestParam(value = "pagesize",required = false,defaultValue = "8")int pagesize){
-        PageResult<Job> jobList = jobService.getJobList(userId,pagenum,pagesize);
+    public Result<Job> getJobList(@RequestParam("token") String token,
+                                  @RequestParam("userid") String userId,
+                                  @RequestParam(value = "pagenum", required = false, defaultValue = "1") int pagenum,
+                                  @RequestParam(value = "pagesize", required = false, defaultValue = "8") int pagesize) {
+        PageResult<Job> jobList = jobService.getJobList(userId, pagenum, pagesize);
         try {
             JwtUtil.parseJWT(token);
         } catch (Exception e) {
             e.printStackTrace();
             log.warn("token令牌过期,验证失败");
-            return new Result<>(false,StatusCode.LOGINERROR,"身份过期,请重新登陆");
+            return new Result<>(false, StatusCode.LOGINERROR, "身份过期,请重新登陆");
         }
-        return new Result<>(true, StatusCode.OK,"查询成功",jobList);
+        return new Result<>(true, StatusCode.OK, "查询成功", jobList);
+    }
+
+    @GetMapping("/pausejob")
+    public Result pauseJob(@RequestParam("token") String token, @RequestParam("id") String id) {
+        try {
+            JwtUtil.parseJWT(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.warn("token令牌过期,验证失败");
+            return new Result<>(false, StatusCode.LOGINERROR, "身份过期,请重新登陆");
+        }
+        jobService.pauseJob(id);
+        return new Result<>(true, StatusCode.OK, "暂停成功");
+    }
+
+    @GetMapping("/startjob")
+    public Result startJob(@RequestParam("token") String token, @RequestParam("id") String id) {
+        try {
+            JwtUtil.parseJWT(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.warn("token令牌过期,验证失败");
+            return new Result<>(false, StatusCode.LOGINERROR, "身份过期,请重新登陆");
+        }
+        jobService.startJob(id);
+        return new Result<>(true, StatusCode.OK, "启动成功");
     }
 }
+
+
