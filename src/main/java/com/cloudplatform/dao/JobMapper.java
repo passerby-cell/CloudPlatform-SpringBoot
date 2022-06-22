@@ -13,4 +13,6 @@ public interface JobMapper {
     List<Job> selectAll();
 
     int updateByPrimaryKey(Job record);
+
+    List<Job> selectByUserId(String userId);
 }

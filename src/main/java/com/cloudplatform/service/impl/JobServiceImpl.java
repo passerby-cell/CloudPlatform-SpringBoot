@@ -1,9 +1,14 @@
 package com.cloudplatform.service.impl;
 
+import com.cloudplatform.dao.JobMapper;
 import com.cloudplatform.pojo.Job;
 import com.cloudplatform.service.job.JobService;
+import com.cloudplatform.utils.PageResult;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -15,8 +20,16 @@ import java.util.List;
  */
 @Service
 public class JobServiceImpl implements JobService {
+    @Resource
+    private JobMapper jobMapper;
+
     @Override
-    public List<Job> getJobList() {
-        return null;
+    public PageResult<Job> getJobList(String userId, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Job> jobList = jobMapper.selectByUserId(userId);
+        //获取总条数
+        PageInfo<Job> pageInfo = new PageInfo<>(jobList);
+        return new PageResult<Job>(pageInfo.getTotal(),pageNum,pageSize,jobList);
     }
+
 }

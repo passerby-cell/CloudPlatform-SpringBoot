@@ -1,8 +1,7 @@
 package com.cloudplatform.service.job;
 
 import com.cloudplatform.pojo.Job;
-
-import java.util.List;
+import com.cloudplatform.utils.PageResult;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,5 +11,5 @@ import java.util.List;
  * @Description:
  */
 public interface JobService {
-    List<Job> getJobList();
+    PageResult<Job> getJobList(String userId, int currentPage, int pageSize);
 }

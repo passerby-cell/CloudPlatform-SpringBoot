@@ -23,16 +23,16 @@
       stoptime, workcount, workdonecount, 
       workinlinecount, cpucount, memcount, 
       status, userid)
-    values (#{id,jdbcType=VARCHAR}, #{jobname,jdbcType=VARCHAR}, #{starttime,jdbcType=TIMESTAMP}, 
-      #{stoptime,jdbcType=TIMESTAMP}, #{workcount,jdbcType=INTEGER}, #{workdonecount,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=VARCHAR}, #{jobname,jdbcType=VARCHAR}, #{starttime,jdbcType=VARCHAR},
+      #{stoptime,jdbcType=VARCHAR}, #{workcount,jdbcType=INTEGER}, #{workdonecount,jdbcType=INTEGER},
       #{workinlinecount,jdbcType=INTEGER}, #{cpucount,jdbcType=VARCHAR}, #{memcount,jdbcType=VARCHAR}, 
       #{status,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.cloudplatform.pojo.Job">
     update job
     set jobname = #{jobname,jdbcType=VARCHAR},
-      starttime = #{starttime,jdbcType=TIMESTAMP},
-      stoptime = #{stoptime,jdbcType=TIMESTAMP},
+      starttime = #{starttime,jdbcType=VARCHAR},
+      stoptime = #{stoptime,jdbcType=VARCHAR},
       workcount = #{workcount,jdbcType=INTEGER},
       workdonecount = #{workdonecount,jdbcType=INTEGER},
       workinlinecount = #{workinlinecount,jdbcType=INTEGER},
@@ -53,4 +53,10 @@
     cpucount, memcount, status, userid
     from job
   </select>
+    <select id="selectByUserId" resultType="com.cloudplatform.pojo.Job">
+      select id, jobname, starttime, stoptime, workcount, workdonecount, workinlinecount,
+             cpucount, memcount, status, userid
+      from job
+where userid = #{userId,jdbcType=VARCHAR}
+    </select>
 </mapper>

@@ -1,15 +1,13 @@
 package com.cloudplatform.pojo;
 
-import java.util.Date;
-
 public class Job {
     private String id;
 
     private String jobname;
 
-    private Date starttime;
+    private String starttime;
 
-    private Date stoptime;
+    private String stoptime;
 
     private Integer workcount;
 
@@ -41,19 +39,19 @@ public class Job {
         this.jobname = jobname == null ? null : jobname.trim();
     }
 
-    public Date getStarttime() {
+    public String getStarttime() {
         return starttime;
     }
 
-    public void setStarttime(Date starttime) {
+    public void setStarttime(String starttime) {
         this.starttime = starttime;
     }
 
-    public Date getStoptime() {
+    public String getStoptime() {
         return stoptime;
     }
 
-    public void setStoptime(Date stoptime) {
+    public void setStoptime(String stoptime) {
         this.stoptime = stoptime;
     }
 
