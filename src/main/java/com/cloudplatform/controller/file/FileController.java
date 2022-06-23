@@ -1,7 +1,9 @@
 package com.cloudplatform.controller.file;
 
+import com.cloudplatform.pojo.MyFile;
 import com.cloudplatform.service.file.FileService;
 import com.cloudplatform.utils.JwtUtil;
+import com.cloudplatform.utils.PageResult;
 import com.cloudplatform.utils.Result;
 import com.cloudplatform.utils.StatusCode;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +31,7 @@ public class FileController {
     public Result mkDir(@RequestParam("token")String token,
                         @RequestParam("userid")String userid,
                         @RequestParam("dirname")String dirname,
-                        @RequestParam(value = "dirpath",required = false,defaultValue = "null")String dirpath,
+                        @RequestParam("dirpath")String dirpath,
                         @RequestParam("parentdirid")String parentdirid){
         if (JwtUtil.verifyToken(token)) {
             log.warn("token令牌过期,验证失败");
@@ -41,5 +43,19 @@ public class FileController {
         }else {
             return new Result(false,StatusCode.EERROR,"新建失败");
         }
+    }
+
+    @GetMapping("/getfilelist")
+    public Result<MyFile> getFileList(@RequestParam("token")String token,
+                                      @RequestParam("userid")String userid,
+                                      @RequestParam("parentdirid")String parentdirid,
+                                      @RequestParam(value = "pagenum", required = false, defaultValue = "1") int pagenum,
+                                      @RequestParam(value = "pagesize", required = false, defaultValue = "8") int pagesize){
+        if (JwtUtil.verifyToken(token)) {
+            log.warn("token令牌过期,验证失败");
+            return new Result<>(false, StatusCode.TOKENERROR, "身份过期,请重新登陆");
+        }
+        PageResult<MyFile> fileList=fileService.getFileList(userid,parentdirid,pagenum,pagesize);
+        return new Result<>(true,StatusCode.OK,"查询成功",fileList);
     }
 }

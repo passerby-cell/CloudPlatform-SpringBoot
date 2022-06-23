@@ -8,11 +8,13 @@ import java.util.List;
 public interface MyFileMapper {
     int deleteByPrimaryKey(String id);
 
-    int insert(@Param("record") MyFile record);
+    int insert(MyFile record);
 
     MyFile selectByPrimaryKey(String id);
 
     List<MyFile> selectAll();
 
-    int updateByPrimaryKey(@Param("record")MyFile record);
+    int updateByPrimaryKey(MyFile record);
+
+    List<MyFile> selectUserFile(@Param("userid") String userid,@Param("parentdirid") String parentdirid);
 }

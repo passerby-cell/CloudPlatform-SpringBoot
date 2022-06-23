@@ -1,5 +1,8 @@
 package com.cloudplatform.service.file;
 
+import com.cloudplatform.pojo.MyFile;
+import com.cloudplatform.utils.PageResult;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -9,4 +12,6 @@ package com.cloudplatform.service.file;
  */
 public interface FileService {
     boolean mkDir(String userid, String dirname, String dirpath, String parentdirid);
+
+    PageResult<MyFile> getFileList(String userid, String parentdirid, int pagenum, int pagesize);
 }
