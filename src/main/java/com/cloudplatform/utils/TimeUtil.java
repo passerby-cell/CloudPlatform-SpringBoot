@@ -11,14 +11,19 @@ import java.text.SimpleDateFormat;
  */
 public class TimeUtil {
 
-    public static String getTime(){
+    public static String getFullTime(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String now = sdf.format(System.currentTimeMillis());
+        return now;
+    }
+    public static String getPartTime(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String now = sdf.format(System.currentTimeMillis());
         return now;
     }
 
     public static void main(String[] args) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String now = sdf.format(System.currentTimeMillis());
         System.out.println(now);
     }

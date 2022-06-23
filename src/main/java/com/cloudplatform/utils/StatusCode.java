@@ -11,4 +11,5 @@ public class StatusCode {
     public static final int REMOTEERROR = 204;//远程调用失败
     public static final int REPAETERROR = 205;//用户名重复
     public static final int NOTFOUNDERROR = 206;//没有对应的数据
+    public static final int EERROR = 207;//
 }
