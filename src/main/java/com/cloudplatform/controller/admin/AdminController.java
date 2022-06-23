@@ -2,6 +2,7 @@ package com.cloudplatform.controller.admin;
 
 import com.cloudplatform.pojo.AdminUser;
 import com.cloudplatform.service.admin.AdminService;
+import com.cloudplatform.utils.AesUtil;
 import com.cloudplatform.utils.JwtUtil;
 import com.cloudplatform.utils.Result;
 import com.cloudplatform.utils.StatusCode;
@@ -25,14 +26,15 @@ public class AdminController {
     private AdminService adminService;
 
     @GetMapping("/login")
-    public Result<AdminUser> adminLogin(@RequestParam("username") String username, @RequestParam("password") String password) {
+    public Result<AdminUser> adminLogin(@RequestParam("username") String username,
+                                        @RequestParam("password") String password) {
         AdminUser adminUser = new AdminUser();
-        adminUser.setUsername(username);
-        adminUser.setPassword(password);
+        adminUser.setUsername(AesUtil.decrypt(username));
+        adminUser.setPassword(AesUtil.decrypt(password));
         AdminUser user = adminService.adminLogin(adminUser);
         if (null != user) {
             return new Result<>(true, StatusCode.OK, "登陆成功", user, JwtUtil.createJWT(user.getId(), user.getUsername(), null));
         }
-        return new Result<>(false, StatusCode.ERROR, "账号或密码错误");
+        return new Result<>(false, StatusCode.LOGINERROR, "账号或密码错误");
     }
 }

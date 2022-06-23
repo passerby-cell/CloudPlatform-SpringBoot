@@ -2,6 +2,7 @@ package com.cloudplatform.controller.user;
 
 import com.cloudplatform.pojo.CommonUser;
 import com.cloudplatform.service.user.UserService;
+import com.cloudplatform.utils.AesUtil;
 import com.cloudplatform.utils.JwtUtil;
 import com.cloudplatform.utils.Result;
 import com.cloudplatform.utils.StatusCode;
@@ -25,30 +26,33 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/login")
-    public Result<CommonUser> userLogin(@RequestParam("username") String username , @RequestParam("password") String password){
+    public Result<CommonUser> userLogin(@RequestParam("username") String username,
+                                        @RequestParam("password") String password) {
         CommonUser user = new CommonUser();
+        username = AesUtil.decrypt(username);
+        password = AesUtil.decrypt(password);
         user.setUsername(username);
         user.setPassword(password);
         CommonUser userLogin = userService.userLogin(user);
-        if (null==userLogin){
-            return new Result(false,StatusCode.LOGINERROR,"用户名或密码错误");
+        if (null == userLogin) {
+            return new Result(false, StatusCode.LOGINERROR, "用户名或密码错误");
         }
-        String token=JwtUtil.createJWT(userLogin.getId(),userLogin.getUsername(),null);
-        return new Result(true,StatusCode.OK,"登录成功",userLogin,token);
+        String token = JwtUtil.createJWT(userLogin.getId(), userLogin.getUsername(), null);
+        return new Result(true, StatusCode.OK, "登录成功", userLogin, token);
     }
 
     @GetMapping("/regist")
     public Result registUser(@RequestParam("username") String username,
-                             @RequestParam("password") String password){
+                             @RequestParam("password") String password) {
         CommonUser user = new CommonUser();
-        user.setUsername(username);
+        user.setUsername(AesUtil.decrypt(username));
         CommonUser userexist = userService.userLogin(user);
-        if (null==userexist){
-            user.setPassword(password);
+        if (null == userexist) {
+            user.setPassword(AesUtil.decrypt(password));
             userService.registUser(user);
-            return new Result(true,StatusCode.OK,"注册成功");
+            return new Result(true, StatusCode.OK, "注册成功");
         }
-        return new Result(false,StatusCode.ERROR,"用户名已注册");
+        return new Result(false, StatusCode.REPAETERROR, "用户名已注册");
     }
 
 }

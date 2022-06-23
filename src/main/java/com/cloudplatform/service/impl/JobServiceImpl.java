@@ -48,4 +48,9 @@ public class JobServiceImpl implements JobService {
         jobMapper.updateStatusByPrimaryKey(job);
     }
 
+    @Override
+    public void deleteJob(String id) {
+        jobMapper.deleteByPrimaryKey(id);
+    }
+
 }

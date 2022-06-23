@@ -28,8 +28,8 @@ public class JwtUtil {
         Date now = new Date(nowMillis);
 
         //如果令牌有效期为null，则默认设置有效期1小时
-        if(ttlMillis==null){
-            ttlMillis=JwtUtil.JWT_TTL;
+        if (ttlMillis == null) {
+            ttlMillis = JwtUtil.JWT_TTL;
         }
 
         //令牌过期时间设置
@@ -52,6 +52,7 @@ public class JwtUtil {
 
     /**
      * 生成加密 secretKey
+     *
      * @return
      */
     public static SecretKey generalKey() {
@@ -63,6 +64,7 @@ public class JwtUtil {
 
     /**
      * 解析令牌数据
+     *
      * @param jwt
      * @return
      * @throws Exception
@@ -75,8 +77,18 @@ public class JwtUtil {
                 .getBody();
     }
 
+    public static boolean verifyToken(String token) {
+        try {
+            JwtUtil.parseJWT(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return true;
+        }
+        return false;
+    }
+
     public static void main(String[] args) throws Exception {
-        System.out.println(createJWT("1","12",null));
+        System.out.println(createJWT("1", "12", null));
 //        System.out.println(parseJWT("eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoiMTIiLCJpc3MiOiJhZG1pbiIsImlhdCI6MTY1NTc3OTY5NCwiZXhwIjoxNjU1NzgzMjk0fQ.AdSbdM_xAL9u9m1V3IiuBnToBpeEyVOkFnH9frlLwdg"));
     }
 }

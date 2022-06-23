@@ -14,4 +14,6 @@ public interface JobService {
     PageResult<Job> getJobList(String userId, int currentPage, int pageSize);
 
     void pauseJob(String id);void startJob(String id);
+
+    void deleteJob(String id);
 }
