@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloudplatform.dao.FileMapper">
+  <resultMap id="BaseResultMap" type="com.cloudplatform.pojo.File">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="uploaddate" jdbcType="VARCHAR" property="uploaddate" />
+    <result column="size" jdbcType="DOUBLE" property="size" />
+    <result column="userid" jdbcType="VARCHAR" property="userid" />
+    <result column="catalogueid" jdbcType="VARCHAR" property="catalogueid" />
+    <result column="isfile" jdbcType="VARCHAR" property="isfile" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from file
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cloudplatform.pojo.File">
+    insert into file (id, name, uploaddate, 
+      size, userid, catalogueid, 
+      isfile)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{uploaddate,jdbcType=VARCHAR}, 
+      #{size,jdbcType=DOUBLE}, #{userid,jdbcType=VARCHAR}, #{catalogueid,jdbcType=VARCHAR}, 
+      #{isfile,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cloudplatform.pojo.File">
+    update file
+    set name = #{name,jdbcType=VARCHAR},
+      uploaddate = #{uploaddate,jdbcType=VARCHAR},
+      size = #{size,jdbcType=DOUBLE},
+      userid = #{userid,jdbcType=VARCHAR},
+      catalogueid = #{catalogueid,jdbcType=VARCHAR},
+      isfile = #{isfile,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, name, uploaddate, size, userid, catalogueid, isfile
+    from file
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, name, uploaddate, size, userid, catalogueid, isfile
+    from file
+  </select>
+</mapper>
