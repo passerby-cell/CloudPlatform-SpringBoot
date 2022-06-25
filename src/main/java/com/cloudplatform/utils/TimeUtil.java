@@ -17,7 +17,7 @@ public class TimeUtil {
         return now;
     }
     public static String getPartTime(){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String now = sdf.format(System.currentTimeMillis());
         return now;
     }

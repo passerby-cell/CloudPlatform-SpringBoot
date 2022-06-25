@@ -32,7 +32,7 @@
             userid      = #{userid,jdbcType=VARCHAR},
             catalogueid = #{catalogueid,jdbcType=VARCHAR},
             isfile      = #{isfile,jdbcType=VARCHAR},
-            isshow        = #{isshow,jdbcType=VARCHAR}
+            isshow      = #{isshow,jdbcType=VARCHAR}
         where id = #{id,jdbcType=VARCHAR}
     </update>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -49,5 +49,12 @@
         from file
         where userid = #{userid}
           and catalogueid = #{parentdirid}
+    </select>
+    <select id="selectDir" resultType="com.cloudplatform.pojo.MyFile">
+        select id, name, uploaddate, size, userid, catalogueid, isshow, isfile
+        from file
+        where userid = #{userid}
+          and catalogueid = #{parentdirid}
+          and name = #{dir}
     </select>
 </mapper>

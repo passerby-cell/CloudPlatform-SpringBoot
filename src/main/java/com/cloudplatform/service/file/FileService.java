@@ -2,6 +2,7 @@ package com.cloudplatform.service.file;
 
 import com.cloudplatform.pojo.MyFile;
 import com.cloudplatform.utils.PageResult;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,4 +15,6 @@ public interface FileService {
     boolean mkDir(String userid, String dirname, String dirpath, String parentdirid);
 
     PageResult<MyFile> getFileList(String userid, String parentdirid, int pagenum, int pagesize);
+
+    boolean uploadFile(String userid, String dirpath, String parentdirid, MultipartFile file);
 }
