@@ -17,4 +17,6 @@ public interface FileService {
     PageResult<MyFile> getFileList(String userid, String parentdirid, int pagenum, int pagesize);
 
     boolean uploadFile(String userid, String dirpath, String parentdirid, MultipartFile file);
+
+    boolean updateName(String userid, String newname, String oldname, String id, String dirpath);
 }

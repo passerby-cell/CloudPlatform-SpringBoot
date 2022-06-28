@@ -16,7 +16,9 @@ public interface MyFileMapper {
 
     int updateByPrimaryKey(MyFile record);
 
-    List<MyFile> selectUserFile(@Param("userid") String userid,@Param("parentdirid") String parentdirid);
+    List<MyFile> selectUserFile(@Param("userid") String userid, @Param("parentdirid") String parentdirid);
 
-    MyFile selectDir(@Param("parentdirid") String parentdirid,@Param("dir") String dir,@Param("userid") String userid);
+    MyFile selectDir(@Param("parentdirid") String parentdirid, @Param("dir") String dir, @Param("userid") String userid);
+
+    void updateFileName(@Param("id") String id, @Param("newname") String newname);
 }

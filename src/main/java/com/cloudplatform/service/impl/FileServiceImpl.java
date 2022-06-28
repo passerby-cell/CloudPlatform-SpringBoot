@@ -155,4 +155,17 @@ public class FileServiceImpl implements FileService {
         return false;
     }
 
+    @Override
+    public boolean updateName(String userid, String newname,String oldname,  String id, String dirpath) {
+        String oldpath = filePath + dirpath + "/"+oldname;
+        String newpath = filePath + dirpath + "/"+newname;
+        File oldFile = new File(oldpath);
+        File newFile = new File(newpath);
+        boolean flag = oldFile.renameTo(newFile);
+        if (flag){
+            fileMapper.updateFileName(id,newname);
+        }
+        return flag;
+    }
+
 }

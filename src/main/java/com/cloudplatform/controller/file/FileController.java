@@ -74,4 +74,24 @@ public class FileController {
             return new Result(false, StatusCode.EERROR, "上传失败");
         }
     }
+
+    @GetMapping("/updatename")
+    public Result updateName(@RequestParam("token") String token,
+                             @RequestParam("userid") String userid,
+                             @RequestParam("newname") String newname,
+                             @RequestParam("oldname") String oldname,
+                             @RequestParam("id") String id,
+                             @RequestParam(value = "dirpath", required = false, defaultValue = "null") String dirpath
+    ) {
+        if (JwtUtil.verifyToken(token)) {
+            log.warn("token令牌过期,验证失败");
+            return new Result<>(false, StatusCode.TOKENERROR, "身份过期,请重新登陆");
+        }
+        boolean flag = fileService.updateName(userid, newname, oldname, id, dirpath);
+        if (flag) {
+            return new Result(true, StatusCode.OK, "修改成功");
+        }
+        return new Result(true, StatusCode.OK, "修改失败");
+
+    }
 }
