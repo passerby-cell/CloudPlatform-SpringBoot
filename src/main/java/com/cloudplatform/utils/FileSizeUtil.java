@@ -7,12 +7,11 @@ package com.cloudplatform.utils;
  * @Date: 2022/06/25/12:31 下午
  * @Description:
  */
-public class FileUtil {
+public class FileSizeUtil {
     /**
      * 判断文件大小
      *
      * @param len  文件长度
-     * @param size 限制大小
      * @param unit 限制单位（B,K,M,G）
      * @return
      */

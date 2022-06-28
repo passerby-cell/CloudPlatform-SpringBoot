@@ -3,19 +3,21 @@ package com.cloudplatform.service.impl;
 import com.cloudplatform.dao.MyFileMapper;
 import com.cloudplatform.pojo.MyFile;
 import com.cloudplatform.service.file.FileService;
-import com.cloudplatform.utils.FileUtil;
-import com.cloudplatform.utils.IdWorker;
-import com.cloudplatform.utils.PageResult;
-import com.cloudplatform.utils.TimeUtil;
+import com.cloudplatform.utils.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -27,9 +29,14 @@ import java.util.List;
  * @Description:
  */
 @Service
+@Slf4j
 public class FileServiceImpl implements FileService {
     @Value("${file}")
     private String filePath;
+    @Value("${downloadFile}")
+    private String downloadFilePath;
+    @Value("${zipFile}")
+    private String zipFile;
     @Resource
     private MyFileMapper fileMapper;
     @Autowired
@@ -70,6 +77,15 @@ public class FileServiceImpl implements FileService {
         }
     }
 
+    /**
+     * 获取文件目录
+     *
+     * @param userid
+     * @param parentdirid
+     * @param pagenum
+     * @param pagesize
+     * @return
+     */
     @Override
     public PageResult<MyFile> getFileList(String userid, String parentdirid, int pagenum, int pagesize) {
         PageHelper.startPage(pagenum, pagesize);
@@ -79,6 +95,15 @@ public class FileServiceImpl implements FileService {
 
     }
 
+    /**
+     * 上传文件
+     *
+     * @param userid
+     * @param dirpath
+     * @param parentdirid
+     * @param file
+     * @return
+     */
     @Override
     public synchronized boolean uploadFile(String userid, String dirpath, String parentdirid, MultipartFile file) {
         try {
@@ -89,7 +114,7 @@ public class FileServiceImpl implements FileService {
             String path = filePath + dirpath + "/" + fileName;
             File dest = new File(path);//dist为文件，有多级目录的文件   new File(path).getAbsolutePath()
             //计算文件大小
-            double fileSizeMB = Math.floor(FileUtil.checkFileSize(file.getSize(), "M"));
+            double fileSizeMB = Math.floor(FileSizeUtil.checkFileSize(file.getSize(), "M"));
             if (!dest.getParentFile().exists()) {//这里使用.getParentFile()，目的就是取文件前面目录的路径
                 dest.getParentFile().mkdirs();
             }
@@ -108,10 +133,10 @@ public class FileServiceImpl implements FileService {
                 return true;
             } else {
                 String dir = fileName.substring(0, fileName.indexOf("/"));
-                String filename = fileName.substring(fileName.indexOf("/")+1);
-                MyFile dirList = fileMapper.selectDir(parentdirid, dir,userid);
+                String filename = fileName.substring(fileName.indexOf("/") + 1);
+                MyFile dirList = fileMapper.selectDir(parentdirid, dir, userid);
                 if (dirList == null) {
-                    String id=String.valueOf(idWorker.nextId());
+                    String id = String.valueOf(idWorker.nextId());
                     MyFile myFile = new MyFile();
                     myFile.setId(id);
                     myFile.setCatalogueid(parentdirid);
@@ -155,17 +180,66 @@ public class FileServiceImpl implements FileService {
         return false;
     }
 
+    /**
+     * 更新文件名
+     *
+     * @param userid
+     * @param newname
+     * @param oldname
+     * @param id
+     * @param dirpath
+     * @return
+     */
     @Override
-    public boolean updateName(String userid, String newname,String oldname,  String id, String dirpath) {
-        String oldpath = filePath + dirpath + "/"+oldname;
-        String newpath = filePath + dirpath + "/"+newname;
+    public boolean updateName(String userid, String newname, String oldname, String id, String dirpath) {
+        String oldpath = filePath + dirpath + "/" + oldname;
+        String newpath = filePath + dirpath + "/" + newname;
         File oldFile = new File(oldpath);
         File newFile = new File(newpath);
         boolean flag = oldFile.renameTo(newFile);
-        if (flag){
-            fileMapper.updateFileName(id,newname);
+        if (flag) {
+            fileMapper.updateFileName(id, newname);
         }
         return flag;
+    }
+
+    /**
+     * 下载文件
+     *
+     * @param name
+     * @param dirpath
+     * @param response
+     * @return
+     */
+    @Override
+    public boolean downLoadFile(String name, String dirpath, HttpServletResponse response, HttpServletRequest request) {
+        File f = new File(filePath + dirpath + "/" + name);
+        FileDownloadUtil.downloadFile(name, f, response, request);
+        return true;
+    }
+
+    /**
+     * 批量下载文件
+     *
+     * @param name
+     * @param dirpath
+     * @param response
+     * @return
+     */
+    @Override
+    public boolean downLoadFiles(String[] name, String dirpath, HttpServletResponse response, HttpServletRequest request) throws FileNotFoundException {
+        //压缩文件
+        for (int i = 0; i < name.length; i++) {
+            File file = new File(filePath + dirpath + "/" + name[i]);
+            FileCopyUtil.copy(file, new File(zipFile));
+        }
+        FileOutputStream fos = new FileOutputStream(new File(downloadFilePath));
+        ZipUtil.toZip(zipFile, fos, true);
+        File f = new File(downloadFilePath);
+        FileDownloadUtil.downloadFile("Download.zip", f, response, request);
+        File file = new File(zipFile);
+        FileDeleteUtil.deleteFile(file);
+        return true;
     }
 
 }

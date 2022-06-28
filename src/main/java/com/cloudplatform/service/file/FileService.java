@@ -4,6 +4,10 @@ import com.cloudplatform.pojo.MyFile;
 import com.cloudplatform.utils.PageResult;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileNotFoundException;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -19,4 +23,8 @@ public interface FileService {
     boolean uploadFile(String userid, String dirpath, String parentdirid, MultipartFile file);
 
     boolean updateName(String userid, String newname, String oldname, String id, String dirpath);
+
+    boolean downLoadFile(String name, String dirpath, HttpServletResponse response, HttpServletRequest request);
+
+    boolean downLoadFiles(String[] name, String dirpath, HttpServletResponse response,HttpServletRequest request) throws FileNotFoundException;
 }

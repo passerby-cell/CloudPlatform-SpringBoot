@@ -37,8 +37,8 @@
     </update>
     <update id="updateFileName">
         update file
-        set name = #{newname,jdbcType=VARCHAR},
-            where id = #{id,jdbcType=VARCHAR}
+        set name = #{newname,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
     </update>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select id, name, uploaddate, size, userid, catalogueid, isfile, isshow

@@ -11,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileNotFoundException;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -21,6 +25,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/file")
 @Slf4j
+@SuppressWarnings("all")
+@CrossOrigin
 public class FileController {
     @Autowired
     private FileService fileService;
@@ -93,5 +99,47 @@ public class FileController {
         }
         return new Result(true, StatusCode.OK, "修改失败");
 
+    }
+
+    @GetMapping("/downloadfile")
+    public Result downLoadFile(@RequestParam("token") String token,
+                               @RequestParam("name") String name,
+                               @RequestParam(value = "dirpath", required = false, defaultValue = "null") String dirpath,
+                               HttpServletResponse response,
+                               HttpServletRequest request
+    ) {
+        if (JwtUtil.verifyToken(token)) {
+            log.warn("token令牌过期,验证失败");
+            return new Result<>(false, StatusCode.TOKENERROR, "身份过期,请重新登陆");
+        }
+        boolean flag = fileService.downLoadFile(name, dirpath, response,request );
+        if (flag) {
+            return new Result(true, StatusCode.OK, "下载成功");
+        }
+        return new Result(true, StatusCode.OK, "下载失败");
+    }
+
+    @GetMapping("/downloadfiles")
+    public Result downLoadFiles(
+            @RequestParam("token") String token,
+            @RequestParam("name") String data,
+            HttpServletResponse response,
+            HttpServletRequest request,
+            @RequestParam(value = "dirpath", required = false, defaultValue = "null") String dirpath
+            ) throws FileNotFoundException {
+        String[] temp = data.split("/");
+        String[] name=new String[temp.length-1];
+        for (int i = 1; i < temp.length; i++) {
+            name[i-1]=temp[i];
+        }
+        if (JwtUtil.verifyToken(token)) {
+            log.warn("token令牌过期,验证失败");
+            return new Result<>(false, StatusCode.TOKENERROR, "身份过期,请重新登陆");
+        }
+        boolean flag = fileService.downLoadFiles(name, dirpath, response,request);
+        if (flag) {
+            return new Result(true, StatusCode.OK, "下载成功");
+        }
+        return new Result(true, StatusCode.OK, "下载失败");
     }
 }
