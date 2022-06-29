@@ -112,7 +112,7 @@ public class FileController {
             log.warn("token令牌过期,验证失败");
             return new Result<>(false, StatusCode.TOKENERROR, "身份过期,请重新登陆");
         }
-        boolean flag = fileService.downLoadFile(name, dirpath, response,request );
+        boolean flag = fileService.downLoadFile(name, dirpath, response, request);
         if (flag) {
             return new Result(true, StatusCode.OK, "下载成功");
         }
@@ -126,20 +126,59 @@ public class FileController {
             HttpServletResponse response,
             HttpServletRequest request,
             @RequestParam(value = "dirpath", required = false, defaultValue = "null") String dirpath
-            ) throws FileNotFoundException {
+    ) throws FileNotFoundException {
         String[] temp = data.split("/");
-        String[] name=new String[temp.length-1];
+        String[] name = new String[temp.length - 1];
         for (int i = 1; i < temp.length; i++) {
-            name[i-1]=temp[i];
+            name[i - 1] = temp[i];
         }
         if (JwtUtil.verifyToken(token)) {
             log.warn("token令牌过期,验证失败");
             return new Result<>(false, StatusCode.TOKENERROR, "身份过期,请重新登陆");
         }
-        boolean flag = fileService.downLoadFiles(name, dirpath, response,request);
+        boolean flag = fileService.downLoadFiles(name, dirpath, response, request);
         if (flag) {
             return new Result(true, StatusCode.OK, "下载成功");
         }
         return new Result(true, StatusCode.OK, "下载失败");
+    }
+
+    @DeleteMapping("/deletefile")
+    public Result deleteFile(@RequestParam("token") String token,
+                             @RequestParam("id") String id,
+                             @RequestParam("name") String name,
+                             @RequestParam("isfile") String isfile,
+                             @RequestParam(value = "dirpath", required = false, defaultValue = "null") String dirpath
+    ) {
+        if (JwtUtil.verifyToken(token)) {
+            log.warn("token令牌过期,验证失败");
+            return new Result<>(false, StatusCode.TOKENERROR, "身份过期,请重新登陆");
+        }
+        fileService.deleteFile(id, name, dirpath, isfile);
+        return new Result(true, StatusCode.OK, "删除成功");
+    }
+
+    @DeleteMapping("/deletefiles")
+    public Result deleteFiles(@RequestParam("token") String token,
+                             @RequestParam("ids") String iddata,
+                             @RequestParam("names") String namedata,
+                             @RequestParam(value = "dirpath", required = false, defaultValue = "null") String dirpath
+    ) {
+        String[] temp1 = namedata.split("/");
+        String[] name = new String[temp1.length - 1];
+        for (int i = 1; i < temp1.length; i++) {
+            name[i - 1] = temp1[i];
+        }
+        String[] temp = iddata.split("/");
+        String[] id = new String[temp.length - 1];
+        for (int i = 1; i < temp.length; i++) {
+            id[i - 1] = temp[i];
+        }
+        if (JwtUtil.verifyToken(token)) {
+            log.warn("token令牌过期,验证失败");
+            return new Result<>(false, StatusCode.TOKENERROR, "身份过期,请重新登陆");
+        }
+        fileService.deleteFiles(id, name, dirpath);
+        return new Result(true, StatusCode.OK, "删除成功");
     }
 }

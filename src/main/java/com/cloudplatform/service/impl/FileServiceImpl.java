@@ -242,4 +242,50 @@ public class FileServiceImpl implements FileService {
         return true;
     }
 
+    /**
+     * 删除文件或文件夹
+     *
+     * @param id
+     * @param name
+     * @param dirpath
+     * @param isfile
+     * @return
+     */
+    @Override
+    public void deleteFile(String id, String name, String dirpath, String isfile) {
+        File file = new File(filePath + "/" + dirpath + "/" + name);
+        FileDeleteUtil.deleteFile(file);
+        if (isfile.equals("1")) {
+            fileMapper.deleteByPrimaryKey(id);
+        } else {
+            fileMapper.deleteByPrimaryKey(id);
+            delete(id);
+        }
+    }
+
+    @Override
+    public void deleteFiles(String[] id, String[] name, String dirpath) {
+        for (int i = 0; i < id.length; i++) {
+            File file = new File(filePath + "/" + dirpath + "/" + name[i]);
+            if (file.isFile()) {
+                fileMapper.deleteByPrimaryKey(id[i]);
+                FileDeleteUtil.deleteFile(file);
+            } else {
+                fileMapper.deleteByPrimaryKey(id[i]);
+                delete(id[i]);
+                FileDeleteUtil.deleteFile(file);
+            }
+        }
+    }
+
+    public void delete(String id) {
+        List<MyFile> fileList = fileMapper.selectByCatalogueid(id);
+        fileList.forEach(file->{
+            fileMapper.deleteByPrimaryKey(file.getId());
+            List<MyFile> files = fileMapper.selectByCatalogueid(file.getId());
+            if (!files.isEmpty()){
+                delete(file.getId());
+            }
+        });
+    }
 }

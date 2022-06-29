@@ -26,5 +26,9 @@ public interface FileService {
 
     boolean downLoadFile(String name, String dirpath, HttpServletResponse response, HttpServletRequest request);
 
-    boolean downLoadFiles(String[] name, String dirpath, HttpServletResponse response,HttpServletRequest request) throws FileNotFoundException;
+    boolean downLoadFiles(String[] name, String dirpath, HttpServletResponse response, HttpServletRequest request) throws FileNotFoundException;
+
+    void deleteFile(String id, String name, String dirpath, String isfile);
+
+    void deleteFiles(String[] id, String[] name, String dirpath);
 }

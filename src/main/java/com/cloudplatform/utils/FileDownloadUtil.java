@@ -23,13 +23,14 @@ import java.nio.charset.StandardCharsets;
 public class FileDownloadUtil {
     /**
      * 下载文件
+     *
      * @param originalFileName ：下载文件的原始文件名
      * @param file             ：下载的文件
      * @param response         ：相应对象
      */
     public static void downloadFile(String originalFileName, File file, HttpServletResponse response, HttpServletRequest request) {
         // 数据校验
-        checkParam(originalFileName,file);
+        checkParam(originalFileName, file);
 
         //相应头的处理
         //清空response中的输出流
@@ -62,7 +63,7 @@ public class FileDownloadUtil {
             e.printStackTrace();
         } finally {
             //流的关闭
-            if(fileInputStream != null){
+            if (fileInputStream != null) {
                 try {
                     fileInputStream.close();
                 } catch (IOException e) {
@@ -82,28 +83,30 @@ public class FileDownloadUtil {
 
     /**
      * 下载文件的参数的校验，如果参数不合法则抛出自定义异常
+     *
      * @param originalFileName ：文件原始文件名
-     * @param file ：待下载的文件
+     * @param file             ：待下载的文件
      */
     private static void checkParam(String originalFileName, File file) {
-        if(StringUtils.isBlank(originalFileName)){
+        if (StringUtils.isBlank(originalFileName)) {
             throw new Campuso2oException("输入的文件原始文件名为空");
         }
-        if(file == null || !file.exists() ){
+        if (file == null || !file.exists()) {
             throw new Campuso2oException("待在下载的文件不存在！");
         }
     }
 
     /**
      * 获取URL编码后的原始文件名
-     * @param request ：客户端请求
+     *
+     * @param request          ：客户端请求
      * @param originalFileName ：原始文件名
      * @return ：
      */
     private static String getEncodedFilename(HttpServletRequest request, String originalFileName) {
         String encodedFilename = null;
         String agent = request.getHeader("User-Agent");
-        if(agent.contains("MSIE")){
+        if (agent.contains("MSIE")) {
             //IE浏览器
             try {
                 encodedFilename = URLEncoder.encode(originalFileName, "utf-8");
@@ -111,11 +114,11 @@ public class FileDownloadUtil {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-        }else if(agent.contains("Firefox")){
+        } else if (agent.contains("Firefox")) {
             //火狐浏览器
             BASE64Encoder base64Encoder = new BASE64Encoder();
-            encodedFilename = "=?utf-8?B?" + base64Encoder.encode(originalFileName.getBytes(StandardCharsets.UTF_8))+"?=";
-        }else{
+            encodedFilename = "=?utf-8?B?" + base64Encoder.encode(originalFileName.getBytes(StandardCharsets.UTF_8)) + "?=";
+        } else {
             //其他浏览器
             try {
                 encodedFilename = URLEncoder.encode(originalFileName, "utf-8");

@@ -21,4 +21,6 @@ public interface MyFileMapper {
     MyFile selectDir(@Param("parentdirid") String parentdirid, @Param("dir") String dir, @Param("userid") String userid);
 
     void updateFileName(@Param("id") String id, @Param("newname") String newname);
+
+    List<MyFile> selectByCatalogueid(String id);
 }

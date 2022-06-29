@@ -20,9 +20,9 @@ spring:
   servlet:
     multipart:
       enabled: true # 开启文件上传
-      file-size-threshold: 2KB # 文件写入磁盘的阈值
-      max-file-size: 100MB
-      max-request-size: 215MB # 最大请求值大小
+      file-size-threshold: 2000KB # 文件写入磁盘的阈值
+      max-file-size: 1000MB
+      max-request-size: 3000MB # 最大请求值大小
 
 mybatis:
   mapper-locations: classpath:mappers/*Mapper.xml

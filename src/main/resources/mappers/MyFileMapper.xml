@@ -62,4 +62,9 @@
           and catalogueid = #{parentdirid}
           and name = #{dir}
     </select>
+    <select id="selectByCatalogueid" resultType="com.cloudplatform.pojo.MyFile">
+        select id, name, uploaddate, size, userid, catalogueid, isfile, isshow
+        from file
+        where catalogueid = #{id,jdbcType=VARCHAR}
+    </select>
 </mapper>
