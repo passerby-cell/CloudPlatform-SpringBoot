@@ -31,11 +31,11 @@ import java.util.List;
 @Service
 @Slf4j
 public class FileServiceImpl implements FileService {
-    @Value("${file}")
+    @Value("${filemanager.file}")
     private String filePath;
-    @Value("${downloadFile}")
+    @Value("${filemanager.downloadFile}")
     private String downloadFilePath;
-    @Value("${zipFile}")
+    @Value("${filemanager.zipFile}")
     private String zipFile;
     @Resource
     private MyFileMapper fileMapper;

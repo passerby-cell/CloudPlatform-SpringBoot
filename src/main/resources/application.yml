@@ -35,9 +35,22 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
 
-# 文件上传的路径
-file: /Users/linhaiyang/Downloads/Misc/
-# 文件下载的路径,需要自己新建到Download文件夹
-downloadFile: /Users/linhaiyang/Downloads/Misc/Download/Download.zip
-# 文件打包的路径(中转)
-zipFile: /Users/linhaiyang/Downloads/Misc/Zip
+filemanager:
+  # 文件上传的路径
+  file: /Users/linhaiyang/Downloads/Misc/
+  # 文件下载的路径,需要自己新建到Download文件夹
+  downloadFile: /Users/linhaiyang/Downloads/Misc/Download/Download.zip
+  # 文件打包的路径(中转)
+  zipFile: /Users/linhaiyang/Downloads/Misc/Zip
+
+docker:
+  # docker连接
+  dockerConnect: tcp://localhost:2375
+  # 本地挂载目录的父目录的路径
+  baseBindDirlocal: /Users/linhaiyang/Downloads/Misc/
+  # 容器中挂在的目录的路径
+  bindDirContainer: /home/coder/workspace/
+
+IDE:
+  # IDE的访问路径,例如:  http://localhost:10000/?folder=/home/coder/workspace
+  uri: /?folder=/home/coder/workspace
