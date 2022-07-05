@@ -61,6 +61,6 @@
 <!--        <table tableName="adminUser" domainObjectName="AdminUser"></table>-->
 <!--        <table tableName="job" domainObjectName="Job"></table>-->
 <!--        <table tableName="file" domainObjectName="MyFile"></table>-->
-        <table tableName="ide" domainObjectName="IDE"></table>
+<!--        <table tableName="ide" domainObjectName="IDE"></table>-->
     </context>
 </generatorConfiguration>

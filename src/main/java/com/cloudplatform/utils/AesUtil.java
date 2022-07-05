@@ -8,7 +8,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 
 /**
- * 登陆密码加密
+ * 登陆密码加密/解密
  */
 @Slf4j
 public class AesUtil {

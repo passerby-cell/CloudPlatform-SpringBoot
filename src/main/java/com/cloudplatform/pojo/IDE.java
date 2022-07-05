@@ -9,5 +9,4 @@ public class IDE {
     private Integer port;
 
     private String userid;
-
     }

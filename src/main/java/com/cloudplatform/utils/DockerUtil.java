@@ -8,7 +8,6 @@ import com.github.dockerjava.api.command.ListContainersCmd;
 import com.github.dockerjava.api.model.*;
 import com.github.dockerjava.core.DockerClientBuilder;
 import com.github.dockerjava.core.command.ExecStartResultCallback;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -24,13 +23,6 @@ import java.util.List;
  */
 
 public class DockerUtil {
-    @Value("${docker.dockerConnect}")
-    private static String dockerconnect;
-    @Value("${docker.baseBindDirlocal}")
-    private static String baseBindDirlocal;
-    @Value("${docker.bindDirContainer}")
-    private static String bindDirContainer;
-
     /**
      * 获取Docker连接
      *
@@ -39,7 +31,7 @@ public class DockerUtil {
     public static DockerClient getDockerConnect() {
         // 连接docker服务器
         return DockerClientBuilder
-                .getInstance(dockerconnect).build();
+                .getInstance("tcp://localhost:2375").build();
     }
 
     /**
@@ -113,7 +105,17 @@ public class DockerUtil {
         DockerClient dockerClient = getDockerConnect();
         return dockerClient.listContainersCmd().withStatusFilter("exited").exec();
     }
-
+    /**
+     * 获取所有运行结束的容器
+     *
+     * @return
+     */
+    public static List<Container> getExitedNamedContainerList(String name) {
+        DockerClient dockerClient = getDockerConnect();
+        ListContainersCmd listContainersCmd = dockerClient.listContainersCmd();
+        listContainersCmd.withStatusFilter("exited").getFilters().put("name", Arrays.asList(name));
+        return listContainersCmd.exec();
+    }
     /**
      * 获取指定名字的容器
      *
@@ -200,7 +202,7 @@ public class DockerUtil {
         CreateContainerResponse container = getDockerConnect().createContainerCmd(Image)
                 .withName(containerName) //给容器命名
                 .withPortBindings(PortBinding.parse(port +":"+"8080")) //映射到容器内部的的8080端口
-                .withBinds(Bind.parse(baseBindDirlocal+"/"+userid+"/"+":"+bindDirContainer)) //目录挂载
+                .withBinds(Bind.parse("/Users/linhaiyang/Downloads/Misc/"+userid+"/"+":/home/coder/workspace/")) //目录挂载
                 .exec();
 
         //运行容器

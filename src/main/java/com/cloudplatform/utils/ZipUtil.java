@@ -135,7 +135,7 @@ public class ZipUtil {
 
 
     public static void main(String[] args) throws Exception {
-        /** 测试压缩方法1  */
+        /* 测试压缩方法1  */
         FileOutputStream fos1 = new FileOutputStream(new File("/Users/linhaiyang/Downloads/Misc/Download/Download.zip"));
         ZipUtil.toZip("/Users/linhaiyang/Downloads/Misc/15195812763", fos1, true);
     }

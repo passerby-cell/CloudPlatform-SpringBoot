@@ -44,13 +44,16 @@ filemanager:
   zipFile: /Users/linhaiyang/Downloads/Misc/Zip
 
 docker:
-  # docker连接
-  dockerConnect: tcp://localhost:2375
-  # 本地挂载目录的父目录的路径
-  baseBindDirlocal: /Users/linhaiyang/Downloads/Misc/
-  # 容器中挂在的目录的路径
-  bindDirContainer: /home/coder/workspace/
+#  # docker连接
+#  dockerConnect: tcp://localhost:2375
+#  # 本地挂载目录的父目录的路径
+#  baseBindDirlocal: /Users/linhaiyang/Downloads/Misc/
+#  # 容器中挂在的目录的路径
+#  bindDirContainer: /home/coder/workspace/
+  #在线ide开始的端口号
+  startport: 10000
 
 IDE:
   # IDE的访问路径,例如:  http://localhost:10000/?folder=/home/coder/workspace
-  uri: /?folder=/home/coder/workspace
+  path: /?folder=/home/coder/workspace
+  ip: 127.0.0.1

@@ -5,7 +5,7 @@ package com.cloudplatform.utils;
  *
  * @Auther: 林海洋
  * @Date: 2022/06/28/11:33 下午
- * @Description:
+ * @Description: 打包异常
  */
 public class Campuso2oException extends RuntimeException{
     public Campuso2oException(String origin){

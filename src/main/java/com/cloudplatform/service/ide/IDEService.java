@@ -8,5 +8,7 @@ package com.cloudplatform.service.ide;
  * @Description:
  */
 public interface IDEService {
-    void startIDE(String userid);
+    String startIDE(String userid);
+
+    void stopIDE(String userid);
 }

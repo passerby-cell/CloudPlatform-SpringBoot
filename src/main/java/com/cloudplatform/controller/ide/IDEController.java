@@ -33,7 +33,18 @@ public class IDEController {
             log.warn("token令牌过期,验证失败");
             return new Result<>(false, StatusCode.TOKENERROR, "身份过期,请重新登陆");
         }
-        ideService.startIDE(userid);
-        return new Result(true,StatusCode.OK,"开启成功");
+        String ideUrl = ideService.startIDE(userid);
+        return new Result(true,StatusCode.OK,"开启成功",ideUrl);
+    }
+
+    @GetMapping("/stop")
+    public Result stopIDE(@RequestParam("token") String token,
+                           @RequestParam("userid") String userid){
+        if (JwtUtil.verifyToken(token)) {
+            log.warn("token令牌过期,验证失败");
+            return new Result<>(false, StatusCode.TOKENERROR, "身份过期,请重新登陆");
+        }
+        ideService.stopIDE(userid);
+        return new Result(true,StatusCode.OK,"关闭成功");
     }
 }
